@@ -13,6 +13,18 @@ char* markdown_to_html(const char* markdown_text) {
         return NULL;
     }
 
+    for (int i = 0; markdown_text[i] != '\0'; i++) {
+        // Handle headers
+        if (markdown_text[i] == '#') {
+            int header_level = 1;
+            while (markdown_text[i + header_level] == '#') {
+                header_level++;
+            }
+            snprintf(html_text, MAX_BUFFER_SIZE, "<h%d>%s</h%d>", header_level, markdown_text + header_level, header_level);
+            return html_text;
+        }
+    }
+
     strcpy(html_text, markdown_text);
 
     return html_text;
